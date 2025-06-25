@@ -43,12 +43,12 @@ def login(driver):
         driver.find_element(By.NAME, "password").send_keys(PASSWORD)
 
         try:
-            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Login')]"))).click()
-        except:
-            try:
-                driver.find_element(By.CSS_SELECTOR, "button[type='senden']").click()
-            except:
-                driver.find_element(By.TAG_NAME, "button").click()
+            # Click the <input type="submit"> with value 'Senden'
+            driver.find_element(By.CSS_SELECTOR, "input[type='submit'][value='Senden']").click()
+        except Exception as e:
+            print("Failed to click the login button:", e)
+            driver.find_element(By.NAME, "login_form").submit()
+
 
         WebDriverWait(driver, 10).until(EC.url_changes(LOGIN_URL))
         print("Login successful.")
